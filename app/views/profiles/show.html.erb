@@ -33,6 +33,7 @@
 <br>
 <h2>I work here:</h2>
 <ul>
+
 	<% @business_profiles.each do |business_profile| %>
 		<li><%= link_to business_profile.name, business_profile_path(business_profile) %></li>
 	<% end %>

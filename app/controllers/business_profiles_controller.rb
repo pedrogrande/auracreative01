@@ -16,7 +16,12 @@ class BusinessProfilesController < ApplicationController
   # GET /business_profiles
   # GET /business_profiles.json
   def index
-    @business_profiles = BusinessProfile.all
+    if params[:tag]
+      @tag = ActsAsTaggableOn::Tag.find_by(name: params[:tag])
+      @business_profiles = BusinessProfile.tagged_with(params[:tag])
+    else
+      @business_profiles = BusinessProfile.all
+    end
   end
 
   # GET /business_profiles/1
@@ -85,6 +90,6 @@ class BusinessProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def business_profile_params
-      params.require(:business_profile).permit(:name, :logo, :description, :head_count, :website_link)
+      params.require(:business_profile).permit(:name, :logo, :description, :head_count, :website_link, :tag_list)
     end
 end
